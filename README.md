@@ -7,6 +7,8 @@ FanTonic is an innovative live voice application geared towards enhancing commun
 
 ### System Architecture Overview:
 
+
+
 1. **Microphone Input Capture:**
    - The application begins its process by capturing live audio input from the user through a microphone. This audio is expected to be in the Fan language.
 
