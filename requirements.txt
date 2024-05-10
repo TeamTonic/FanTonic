@@ -2,6 +2,7 @@ tensorflow
 torch
 torchvision
 torchaudio
+sentencepiece
 transformers
 accelerate
 optimum
@@ -11,3 +12,5 @@ llama-index
 numpy
 scipy
 gradio
+soundfile
+datasets[audio]
