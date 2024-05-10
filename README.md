@@ -1,5 +1,6 @@
 # FanTonic
 
+![Fan-Tonic](https://git.tonic-ai.com/Tonic-AI/FanTonic/FanTonic/-/raw/main/docs/Fan-Tonic.png?ref_type=heads)
 
 ## How FanTonic Works
 
