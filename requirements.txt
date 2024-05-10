@@ -1,6 +1,7 @@
-torch
-torch-audio
 tensorflow
+torch
+torchvision
+torchaudio
 transformers
 accelerate
 optimum
