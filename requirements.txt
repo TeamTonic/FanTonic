@@ -14,3 +14,6 @@ scipy
 gradio
 soundfile
 datasets[audio]
+protobuf
+sacrebleu
+py7zr

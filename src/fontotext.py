@@ -45,8 +45,8 @@ class FonToText:
         
         return predictions[0] if predictions else ""
 
-# Example usage:
-if __name__ == "__main__":
-    audio_path = "path_to_your_audio_file.wav"
-    transcriber = FonToText()
-    print("Transcribed Text:", transcriber.transcribe(audio_path))
+# # Example usage:
+# if __name__ == "__main__":
+#     audio_path = "path_to_your_audio_file.wav"
+#     transcriber = FonToText()
+#     print("Transcribed Text:", transcriber.transcribe(audio_path))
