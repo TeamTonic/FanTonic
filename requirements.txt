@@ -8,4 +8,5 @@ cohere
 openai
 llama-index
 numpy
+scipy
 gradio
