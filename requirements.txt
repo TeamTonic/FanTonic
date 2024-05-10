@@ -1,8 +1,11 @@
 torch
+torch-audio
+tensorflow
 transformers
 accelerate
 optimum
 cohere
 openai
 llama-index
+numpy
 gradio
