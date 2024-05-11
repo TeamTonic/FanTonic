@@ -1,11 +1,14 @@
 # FanTonic
 
+![Fan-Tonic](https://git.tonic-ai.com/Tonic-AI/FanTonic/FanTonic/-/raw/main/docs/Fan-Tonic.png?ref_type=heads)
 
 ## How FanTonic Works
 
 FanTonic is an innovative live voice application geared towards enhancing communication for speakers of the Fan language from Benin by providing immediate vocal responses in the same language. Below is a detailed explanation and architecture of how the application functions.
 
 ### System Architecture Overview:
+
+
 
 1. **Microphone Input Capture:**
    - The application begins its process by capturing live audio input from the user through a microphone. This audio is expected to be in the Fan language.
