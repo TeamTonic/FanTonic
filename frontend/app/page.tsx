@@ -30,7 +30,7 @@ export default function Home() {
           className="max-w-4xl px-4 mx-auto text-5xl font-bold leading-relaxed text-center md:text-6xl lg:text-7xl lg:leading-loose text-neutral-700 dark:text-white"
         >
           Your Fan Language Chat Companion <br />
-          <Link href={"/chatbot"}>
+          <Link href={"/dashboard"}>
             <Highlight className="p-5 mt-20 text-4xl">
               Try it now!
             </Highlight>

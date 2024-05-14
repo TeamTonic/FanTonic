@@ -16,7 +16,7 @@ export const Header = () => {
             <div className="flex gap-x-5">
                 <ModeToggle />
                 <Button className="text-base" asChild>
-                    <Link href={"/chatbot"}>
+                    <Link href={"/dashboard"}>
                         Prompt in Fan now!
                     </Link>
                 </Button>
