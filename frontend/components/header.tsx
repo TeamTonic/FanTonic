@@ -17,7 +17,7 @@ export const Header = () => {
                 <ModeToggle />
                 <Button className="text-base" asChild>
                     <Link href={"/dashboard"}>
-                        Prompt in Fan now!
+                        Prompt in Fon now!
                     </Link>
                 </Button>
             </div>
