@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { quick_answers } from "@/lib/constants";
 import { ArrowUp, Mic } from "lucide-react";
 import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 
@@ -51,18 +53,41 @@ export const Chatbot = () => {
 
     return (
         <section className="flex flex-col justify-between py-10 min-h-[720px]">
-            <div className="flex flex-col gap-y-3">
-                {responses.map((response: any, index: any) => (
-                    <div key={index}>
-                        {response.question &&
-                            <div className="px-5 py-4 mt-3 ml-auto rounded-full bg-secondary">{response.question}</div>
-                        }
-                        {response.answer &&
-                            <div className="px-5 py-4 rounded-full">{response.answer}</div>
-                        }
-                    </div>
-                ))}
-            </div>
+            {responses.length > 0 ?
+                <div className="flex flex-col gap-y-3">
+                    {responses.map((response: any, index: any) => (
+                        <div key={index}>
+                            {
+                                response.question &&
+                                <div className="px-5 py-4 mt-3 ml-auto rounded-full bg-secondary">{response.question}</div>
+                            }
+                            {
+                                response.answer &&
+                                <div className="px-5 py-4 rounded-full">
+                                    {response.answer}
+                                </div>
+                            }
+                        </div>
+                    ))}
+                </div>
+                : <div className="flex gap-x-6">
+                    {quick_answers.map((answer, index) => (
+                        <Card
+                            key={index}
+                            className="w-[300px] h-[170px] bg-card p-4 hover:bg-secondary cursor-pointer duration-150"
+                            onClick={() => onSubmit({ prompt: answer.question })}
+                        >
+                            <div className="flex items-center text-xl gap-x-3">
+                                <answer.icon size={35} />
+                                {answer.topic}
+                            </div>
+                            <CardContent className="mt-5">
+                                {answer.question}
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            }
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
@@ -92,6 +117,6 @@ export const Chatbot = () => {
                     </div>
                 </form>
             </Form>
-        </section>
+        </section >
     )
 }

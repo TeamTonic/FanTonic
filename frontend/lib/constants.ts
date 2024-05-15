@@ -1,3 +1,5 @@
+import { Building2, Store, TriangleAlert } from "lucide-react";
+
 export const people = [
   {
     id: 1,
@@ -18,6 +20,25 @@ export const people = [
     designation: "CIO",
     image:
       "https://cdn.discordapp.com/attachments/1238172733477752954/1239249171782045806/YugPpWZ7_400x400.jpg?ex=66423c3a&is=6640eaba&hm=5f00a202fa0a622ccc5ae6c502074d9d82c6e2d21da5fbc3b4172e966681b7f7&",
+  },
+];
+
+export const quick_answers = [
+  {
+    topic: "Call for an emergency",
+    question: "Hey, how should I call for an emergency in Benin?",
+    icon: TriangleAlert,
+  },
+  {
+    topic: "Accommodating",
+    question: "Hey, how should a conversation for acommodating go in Benin?",
+    icon: Building2,
+  },
+  {
+    topic: "Shop conversation",
+    question:
+      "Hey, how should I ask for the price of a product in a local shop in Benin?",
+    icon: Store,
   },
 ];
 

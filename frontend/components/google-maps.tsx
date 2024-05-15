@@ -1,5 +1,6 @@
 "use client";
 import { Loader } from "@googlemaps/js-api-loader";
+import { Loader2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 export const GoogleMaps = () => {
@@ -31,6 +32,6 @@ export const GoogleMaps = () => {
     }, [])
 
     return (
-        <div className="h-[700px]" ref={mapRef}>Google maps component</div>
+        <div className="h-[700px]" ref={mapRef}><Loader2 size={37} className="animate-spin" /></div>
     )
 }
