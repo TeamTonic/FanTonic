@@ -23,3 +23,5 @@ googlemaps
 wikipedia
 flask
 langhchain_openai
+langhchain
+flask_cors
