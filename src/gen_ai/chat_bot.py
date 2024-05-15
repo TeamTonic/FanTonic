@@ -24,3 +24,7 @@ conversation = LLMChain(
     verbose=True,
     memory=memory
 )
+
+if __name__ == "__main__":
+    output = conversation.invoke({"question":"who are you"})
+    x = 0
