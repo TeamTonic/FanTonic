@@ -22,3 +22,4 @@ langchain-google-community
 googlemaps
 wikipedia
 flask
+langhchain_openai
