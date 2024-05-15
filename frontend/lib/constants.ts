@@ -19,13 +19,6 @@ export const people = [
     image:
       "https://cdn.discordapp.com/attachments/1238172733477752954/1239249171782045806/YugPpWZ7_400x400.jpg?ex=66423c3a&is=6640eaba&hm=5f00a202fa0a622ccc5ae6c502074d9d82c6e2d21da5fbc3b4172e966681b7f7&",
   },
-  {
-    id: 4,
-    name: "Zhang Ming",
-    designation: "Frontend Internship",
-    image:
-      "https://cdn.discordapp.com/avatars/1133411869214920855/88e39b9934dcc8be830b4363d6fc1494.webp?size=240",
-  },
 ];
 
 export const globeConfig = {
