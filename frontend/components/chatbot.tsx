@@ -63,7 +63,7 @@ export const Chatbot = ({ responses, setResponses }: any) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "blobUrl": blob.blobURL }),
+                body: JSON.stringify({ "blobUrl": blob.blobURL.replace("blob:", ""), "target_language": language }),
             });
 
             const data = await response.json();
