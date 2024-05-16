@@ -22,7 +22,7 @@ langchain-google-community
 googlemaps
 wikipedia
 flask
-langhchain_openai
+langchain-openai
 langhchain
 flask_cors
 wavio
