@@ -72,7 +72,7 @@ async def query_tts():
         
         return_answer = sample['text']
     
-    return jsonify({"question":ai_output, "answer":return_answer }), 200
+        return jsonify({"question":ai_output, "answer":return_answer }), 200
 
 
 @app.route('/query', methods=['POST'])
