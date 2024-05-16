@@ -48,11 +48,13 @@ async def query_tts():
         ai_output = ai_input_message['text']
         sample = conversation.invoke({"question": ai_input_message['text']}, return_only_outputs=True)
         return_answer = sample['text']
+        return jsonify({"error": "Invalid language"}), 400
     elif target_language == "french":
         ai_input_message = await french_tts(temp_file_path)
         ai_output = ai_input_message['text']
         sample = conversation.invoke({"question": ai_input_message['text']}, return_only_outputs=True)
         return_answer = sample['text']
+        return jsonify({"error": "Invalid language"}), 400
     elif target_language == "fongbe":
         ai_input_message = await fon_speech_to_text(temp_file_path)
         ai_input_message = await fon_text_to_french(ai_input_message)
