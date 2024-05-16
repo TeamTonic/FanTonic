@@ -1,13 +1,15 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { quick_answers } from "@/lib/constants";
-import { ArrowUp, Mic } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowUp, Mic, X } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { ReactMic } from "react-mic";
+import { z } from "zod";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 
@@ -15,17 +17,20 @@ const formSchema = z.object({
     prompt: z.string().min(10, {
         message: "Minimum length of your question should be 10 characters."
     })
-})
+});
+
 
 export const Chatbot = () => {
     const [responses, setResponses] = useState<any>([]);
+    const [voice, setVoice] = useState(false);
+    const [language, setLanguage] = useState<string>("English");
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             prompt: "",
         },
-    })
+    });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
@@ -51,6 +56,36 @@ export const Chatbot = () => {
         }
     }
 
+    const onStop = async (blob: any) => {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/query", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ "query_string": blob.blobURL }),
+            });
+
+            const data = await response.json();
+
+            setResponses((prevResponses: any) => [
+                ...prevResponses,
+                { audioSrc: blob.blobURL },
+                { answer: data.text },
+            ]);
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
+    const startHandle = () => {
+        setVoice(true);
+    };
+
+    const endHandle = () => {
+        setVoice(false);
+    };
+
     return (
         <section className="flex flex-col justify-between py-10 min-h-[720px]">
             {responses.length > 0 ?
@@ -70,7 +105,7 @@ export const Chatbot = () => {
                         </div>
                     ))}
                 </div>
-                : <div className="flex gap-x-6">
+                : <div className="flex flex-wrap gap-6 pb-16 max-md:justify-center">
                     {quick_answers.map((answer, index) => (
                         <Card
                             key={index}
@@ -107,13 +142,35 @@ export const Chatbot = () => {
                             </FormItem>
                         )}
                     />
-                    <div className="flex justify-end gap-3 mt-4">
+                    <ReactMic className="w-0" record={voice} onStop={onStop} />
+                    <div className="flex justify-end gap-4 mt-4">
                         <Button type="submit" disabled={!form.getValues("prompt")} className="p-3 py-6 rounded-full">
                             <ArrowUp />
                         </Button>
-                        <Button type="button" className="p-3 py-6 rounded-full">
-                            <Mic />
-                        </Button>
+                        {
+                            !voice ?
+                                <Button type="button" onClick={() => startHandle()} className="p-3 py-6 rounded-full">
+                                    <Mic />
+                                </Button>
+                                :
+                                <Button type="button" onClick={() => endHandle()} className="p-3 py-6 rounded-full">
+                                    <X />
+                                </Button>
+                        }
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant={"secondary"} className="p-3 py-6 text-base rounded-full">{language}</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56">
+                                <DropdownMenuLabel>Pick a language for Speech</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuRadioGroup defaultValue={"English"} value={language} onValueChange={setLanguage}>
+                                    <DropdownMenuRadioItem value="English">English</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="French">French</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="Fongbe">Fongbe</DropdownMenuRadioItem>
+                                </DropdownMenuRadioGroup>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </form>
             </Form>
