@@ -48,13 +48,13 @@ async def query_tts():
         if not data or 'target_language' not in data:
             return jsonify({'error': 'Invalid request. Please provide a "query_string" in the JSON data.'}), 400
         
-        elif data['target_language'] == "english":
+        elif data['target_language'].lower() == "english":
             ai_input_message = await english_tts(temp_file_path)
         
-        elif data['target_language'] == "french":
+        elif data['target_language'].lower() == "french":
             ai_input_message = await french_tts(temp_file_path)
             
-        elif data['target_language'] == "fongbe":
+        elif data['target_language'].lower() == "fongbe":
             ai_input_message = await fon_speech_to_text(temp_file_path)
             ai_input_message = await fon_text_to_french(ai_input_message)
         
@@ -72,7 +72,7 @@ async def query_tts():
         
         return_answer = sample['text']
     
-        return jsonify({"question":ai_output, "answer":return_answer }), 200
+    return jsonify({"question":ai_output, "answer":return_answer }), 200
 
 
 @app.route('/query', methods=['POST'])
