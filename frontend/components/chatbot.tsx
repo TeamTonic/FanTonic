@@ -58,19 +58,19 @@ export const Chatbot = () => {
 
     const onStop = async (blob: any) => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/query", {
+            const response = await fetch("http://127.0.0.1:5000/tss", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ "query_string": blob.blobURL }),
+                body: JSON.stringify({ "blobUrl": blob.blobURL, "target_language": language }),
             });
 
             const data = await response.json();
 
             setResponses((prevResponses: any) => [
                 ...prevResponses,
-                { audioSrc: blob.blobURL },
+                { question: data.question },
                 { answer: data.text },
             ]);
         } catch (err: any) {
@@ -142,7 +142,7 @@ export const Chatbot = () => {
                             </FormItem>
                         )}
                     />
-                    <ReactMic className="w-0" record={voice} onStop={onStop} />
+                    <ReactMic className="w-0" record={voice} onStop={onStop} mimeType="audio/wav" />
                     <div className="flex justify-end gap-4 mt-4">
                         <Button type="submit" disabled={!form.getValues("prompt")} className="p-3 py-6 rounded-full">
                             <ArrowUp />
