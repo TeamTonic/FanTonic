@@ -31,7 +31,7 @@ export default function Home() {
         >
           Your Fon Language Chat Companion <br />
           <Link href={"/dashboard"}>
-            <Highlight className="p-5 mt-20 text-4xl">
+            <Highlight className="p-5 mt-20 text-4xl rounded-full">
               Try it now!
             </Highlight>
           </Link>

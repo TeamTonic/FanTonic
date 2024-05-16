@@ -1,5 +1,3 @@
-"use client";
-
 import { quick_answers } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowUp, Mic, X } from "lucide-react";
@@ -20,8 +18,7 @@ const formSchema = z.object({
 });
 
 
-export const Chatbot = () => {
-    const [responses, setResponses] = useState<any>([]);
+export const Chatbot = ({ responses, setResponses }: any) => {
     const [voice, setVoice] = useState(false);
     const [language, setLanguage] = useState<string>("English");
 
@@ -125,7 +122,7 @@ export const Chatbot = () => {
             }
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="relative mt-11">
                     <FormField
                         control={form.control}
                         name="prompt"

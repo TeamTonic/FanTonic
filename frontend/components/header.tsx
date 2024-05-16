@@ -15,7 +15,7 @@ export const Header = () => {
             </Link>
             <div className="flex gap-x-5">
                 <ModeToggle />
-                <Button className="text-base" asChild>
+                <Button className="text-lg rounded-full" asChild>
                     <Link href={"/dashboard"}>
                         Prompt in Fon now!
                     </Link>
