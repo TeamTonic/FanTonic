@@ -24,6 +24,11 @@ async def query_tts():
     Keyword arguments:
     argument -- description
     Return: return_description
+    ### Example
+    `curl -X POST \
+    -H "Content-Type: application/json" \
+    -d '{"blobUrl": "https://github.com/gradio-app/gradio/raw/main/test/test_files/audio_sample.wav" "target_language":"english" }' \
+    http://127.0.0.1:5000/tts`
     """
     
     
@@ -43,26 +48,31 @@ async def query_tts():
         if not data or 'target_language' not in data:
             return jsonify({'error': 'Invalid request. Please provide a "query_string" in the JSON data.'}), 400
         
-        if data['target_language'] == "english":
+        elif data['target_language'] == "english":
             ai_input_message = await english_tts(temp_file_path)
         
-        if data['target_language'] == "french":
+        elif data['target_language'] == "french":
             ai_input_message = await french_tts(temp_file_path)
             
-        if data['target_language'] == "fongbe":
+        elif data['target_language'] == "fongbe":
             ai_input_message = await fon_speech_to_text(temp_file_path)
             ai_input_message = await fon_text_to_french(ai_input_message)
+        
+        else:
+            return jsonify({"error":"Invalid language"}), 400
             
         
         
-        question = data['question']
+        ai_output = ai_input_message['text']
         
         sample = conversation.invoke(
-        {"question": ai_input_message},
+        {"question": ai_input_message['text']},
         return_only_outputs=True,
         )
+        
+        return_answer = sample['text']
     
-    return jsonify({"question":question, "answer":sample }), 200
+    return jsonify({"question":ai_output, "answer":return_answer }), 200
 
 
 @app.route('/query', methods=['POST'])

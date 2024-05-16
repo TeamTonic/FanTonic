@@ -25,3 +25,5 @@ flask
 langhchain_openai
 langhchain
 flask_cors
+wavio
+flask[async]
