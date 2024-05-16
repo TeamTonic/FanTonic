@@ -1,12 +1,28 @@
 from flask import Flask, request, jsonify
-# from src.server.structured_tools import agent_executor
-# from src.server.cite_recognition_chain import cite_chain
-# from alt_structured_agent import agent_executor
 from src.gen_ai.chat_bot import conversation
 from flask_cors import CORS 
 
+
+
 app = Flask(__name__)
 CORS(app)
+
+@app.route('/tts', methods=['POST'])
+def query_tts():
+    data = request.get_json()  # Get JSON data from POST request
+    if not data or 'target_language' not in data:
+        return jsonify({'error': 'Invalid request. Please provide a "query_string" in the JSON data.'}), 400
+    
+    
+    question = data['question']
+    
+    sample = conversation.invoke(
+    {"question": question},
+    return_only_outputs=True,
+    )
+    
+    return jsonify({"question":question, "answer":sample }), 200
+
 
 @app.route('/query', methods=['POST'])
 def query():
