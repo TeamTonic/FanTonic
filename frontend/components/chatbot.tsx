@@ -55,7 +55,7 @@ export const Chatbot = ({ responses, setResponses }: any) => {
 
     const onStop = async (blob: any) => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/tss", {
+            const response = await fetch("http://127.0.0.1:5000/tts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -146,11 +146,17 @@ export const Chatbot = ({ responses, setResponses }: any) => {
                         </Button>
                         {
                             !voice ?
-                                <Button type="button" onClick={() => startHandle()} className="p-3 py-6 rounded-full">
+                                <Button
+                                    type="button"
+                                    onClick={() => startHandle()}
+                                    className="p-3 py-6 rounded-full">
                                     <Mic />
                                 </Button>
                                 :
-                                <Button type="button" onClick={() => endHandle()} className="p-3 py-6 rounded-full">
+                                <Button
+                                    type="button"
+                                    variant={"destructive"}
+                                    onClick={() => endHandle()} className="p-3 py-6 rounded-full">
                                     <X />
                                 </Button>
                         }
