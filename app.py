@@ -50,29 +50,39 @@ async def query_tts():
         
         elif data['target_language'].lower() == "english":
             ai_input_message = await english_tts(temp_file_path)
+            ai_output = ai_input_message['text']
+            sample = conversation.invoke(
+            {"question": ai_input_message['text']},
+            return_only_outputs=True,
+            )
+            return_answer = sample['text']
+            return jsonify({"question":ai_output, "answer":return_answer }), 200
         
         elif data['target_language'].lower() == "french":
             ai_input_message = await french_tts(temp_file_path)
+            ai_output = ai_input_message['text']
+            sample = conversation.invoke(
+            {"question": ai_input_message['text']},
+            return_only_outputs=True,
+            )
+            return_answer = sample['text']
+            return jsonify({"question":ai_output, "answer":return_answer }), 200
             
         elif data['target_language'].lower() == "fongbe":
             ai_input_message = await fon_speech_to_text(temp_file_path)
             ai_input_message = await fon_text_to_french(ai_input_message)
+            ai_output = ai_input_message['text']
+            sample = conversation.invoke(
+            {"question": ai_input_message['text']},
+            return_only_outputs=True,
+            )
+            return_answer = sample['text']
+            return jsonify({"question":ai_output, "answer":return_answer }), 200
         
         else:
             return jsonify({"error":"Invalid language"}), 400
-            
         
-        
-        ai_output = ai_input_message['text']
-        
-        sample = conversation.invoke(
-        {"question": ai_input_message['text']},
-        return_only_outputs=True,
-        )
-        
-        return_answer = sample['text']
-    
-    return jsonify({"question":ai_output, "answer":return_answer }), 200
+        return jsonify({"question":ai_output, "answer":return_answer }), 200
 
 
 @app.route('/query', methods=['POST'])
