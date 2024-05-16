@@ -1,25 +1,66 @@
 from flask import Flask, request, jsonify
 from src.gen_ai.chat_bot import conversation
+from src.seamless.speech_to_text import (
+    english_tts,
+    french_tts,
+    fon_speech_to_text,
+    fon_text_to_french
+)
 from flask_cors import CORS 
-
+import requests
+import tempfile    
+import asyncio
 
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/tts', methods=['POST'])
-def query_tts():
+async def query_tts():
+    """
+    
+    query string
+    
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    
+    
     data = request.get_json()  # Get JSON data from POST request
-    if not data or 'target_language' not in data:
-        return jsonify({'error': 'Invalid request. Please provide a "query_string" in the JSON data.'}), 400
+    
+    blob_url = data['blobUrl']
+    
+    response = requests.get(blob_url)
+    if response.status_code == 200:
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_file:
+            temp_file.write(response.content)
+            temp_file_path = temp_file.name
+            # print("WAV file downloaded successfully as temporary file:", temp_file_path)
+            # return temp_file_path
     
     
-    question = data['question']
-    
-    sample = conversation.invoke(
-    {"question": question},
-    return_only_outputs=True,
-    )
+        if not data or 'target_language' not in data:
+            return jsonify({'error': 'Invalid request. Please provide a "query_string" in the JSON data.'}), 400
+        
+        if data['target_language'] == "english":
+            ai_input_message = await english_tts(temp_file_path)
+        
+        if data['target_language'] == "french":
+            ai_input_message = await french_tts(temp_file_path)
+            
+        if data['target_language'] == "fongbe":
+            ai_input_message = await fon_speech_to_text(temp_file_path)
+            ai_input_message = await fon_text_to_french(ai_input_message)
+            
+        
+        
+        question = data['question']
+        
+        sample = conversation.invoke(
+        {"question": ai_input_message},
+        return_only_outputs=True,
+        )
     
     return jsonify({"question":question, "answer":sample }), 200
 
@@ -53,4 +94,5 @@ def query():
     return sample
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    asyncio.run(app.run(debug=True))
