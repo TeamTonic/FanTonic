@@ -53,17 +53,20 @@ export const Chatbot = ({ responses, setResponses }: any) => {
         }
     }
 
-    const onStop = async (blob: any) => {
+    async function onStop(recordedAudio: any) {
+        const blob = recordedAudio.blob;
+
         try {
-            // const formData = new FormData();
-            // formData.append('audioBlob', blob, 'audio.wav');
+            const formData: FormData = new FormData();
+            formData.append('target_language', language);
+            formData.append('audioBlob', blob, 'audio.webm');
 
             const response = await fetch("http://127.0.0.1:5000/tts", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "multipart/form-data",
                 },
-                body: JSON.stringify({ "blobUrl": blob.blobURL.replace("blob:", ""), "target_language": language }),
+                body: formData,
             });
 
             const data = await response.json();
@@ -77,7 +80,6 @@ export const Chatbot = ({ responses, setResponses }: any) => {
             console.error("Error:", err);
         }
     }
-
 
     const startHandle = () => {
         setVoice(true);
